@@ -1,63 +1,12 @@
-# Spec: embeddings-benchmark
-
-## Number
-
-#8
+# Spec: 8 - embeddings-benchmark
 
 ## Claim
 
-Este projeto prova que: comparacao de modelos de embedding.
+Embedding comparison benchmark that ranks deterministic retrieval models by Recall@k, indexing time, and query time.
 
-## Stack
+## Acceptance Criteria
 
-python, sentence-transformers, faiss, qdrant, docker
-
-## User-visible output
-
-- Docker command: pending
-- README opens with: # #8 embeddings-benchmark
-- Benchmark table: recall_at_k, indexing_time_ms, query_time_ms
-
-## Scope
-
-In:
-
-- Implementar o menor produto funcional que prove o claim.
-- Rodar por Docker.
-- Gerar benchmark JSON reproduzivel.
-
-Out:
-
-- Publicar repo antes do primeiro resultado numerico.
-- Depender de segredo pago para o caminho default.
-
-## Architecture
-
-`	xt
-client -> app -> domain -> adapters -> benchmark output
-`
-
-## Benchmark
-
-Primary metric:
-
-- name: recall_at_k, indexing_time_ms, query_time_ms
-- target: first reproducible baseline
-- command: pending
-- result file: enchmarks/results/*.json
-
-## Dataset or fixture
-
-- source: pending
-- size: pending
-- license: pending
-- deterministic seed: 42
-
-## Definition of done
-
-- [ ] Docker command works from clean clone.
-- [ ] README starts with project number and benchmark result.
-- [ ] Benchmark command writes JSON result.
-- [ ] Tests cover core behavior.
-- [ ] REFERENCES.md explains reuse.
-- [ ] No secret or paid credential required for default demo.
+- Runs locally with `python -m embeddings_benchmark benchmark --output benchmarks/results/embeddings-baseline.json`.
+- Runs in Docker with no paid secret.
+- Writes benchmark JSON under `benchmarks/results/`.
+- Keeps domain/evaluation logic independent from CLI and future providers.

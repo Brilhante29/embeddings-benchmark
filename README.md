@@ -1,38 +1,45 @@
 # #8 embeddings-benchmark
 
-**Status:** scaffold
+**Claim:** Embedding comparison benchmark that ranks deterministic retrieval models by Recall@k, indexing time, and query time.
 
-**Proves:** comparacao de modelos de embedding.
+**Benchmark:** `best_recall_at_3` = `1.0` on local deterministic fixtures. Result file: `benchmarks/results/embeddings-baseline.json`.
 
-**Benchmark target:** recall_at_k, indexing_time_ms, query_time_ms.
+## What It Proves
 
-**Stack:** python, sentence-transformers, faiss, qdrant, docker.
-
-## Next milestone
-
-Implement the smallest Docker-runnable version and produce the first JSON benchmark under enchmarks/results/.
-
-## Run
-
-`ash
-docker build -t embeddings-benchmark .
-docker run --rm embeddings-benchmark
-`
-
-## Benchmark
-
-`ash
-docker run --rm embeddings-benchmark benchmark
-`
-
-| Metric | Value | Unit |
-|---|---:|---|
-| recall_at_k, indexing_time_ms, query_time_ms | pending | pending |
+This repository is part of **AI Evaluation and Retrieval Systems**. It provides one measurable layer of the AI Evaluation & RAG Platform while keeping the default path local-first, Dockerized, and free of paid credentials.
 
 ## Architecture
 
-Defined in sdd/spec.md before implementation.
+```mermaid
+flowchart LR
+  Fixtures["Local fixtures"] --> Core["Evaluation core"]
+  Core --> CLI["CLI benchmark"]
+  CLI --> Result["Benchmark JSON"]
+  Core --> Future["Future provider adapters"]
+```
 
-## References
+Dependency rule: evaluation core does not import provider SDKs, cloud SDKs, web frameworks, or GitHub automation.
 
-See REFERENCES.md.
+## Run Locally
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m embeddings_benchmark benchmark --output benchmarks/results/embeddings-baseline.json
+```
+
+## Run With Docker
+
+```powershell
+docker build -t embeddings-benchmark .
+docker run --rm embeddings-benchmark
+```
+
+## Benchmark Result
+
+See `benchmarks/results/embeddings-baseline.json`.
+
+## Reuse Contract
+
+- Uses `portfolio-reuse-kit` for agent graph, SDD, validation, design system, and publication gate.
+- Records reusable improvement decisions in `sdd/reuse-improvement-review.md`.
+- Runs without paid secrets by default.

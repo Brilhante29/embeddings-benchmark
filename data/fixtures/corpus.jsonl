@@ -1,0 +1,6 @@
+{"id": "rag", "text": "RAG retrieves grounded context before generation."}
+{"id": "embeddings", "text": "Embeddings map text into vectors for semantic retrieval."}
+{"id": "latency", "text": "Latency benchmarks measure query time in milliseconds."}
+{"id": "cost", "text": "Cost-aware inference compares local and API token prices."}
+{"id": "agents", "text": "Agents solve tasks by routing to tools and checking success."}
+{"id": "prompts", "text": "Prompt A/B tests compare variants with objective scores."}

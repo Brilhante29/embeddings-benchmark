@@ -1,0 +1,4 @@
+{"id": "q1", "query": "semantic vector retrieval", "relevant": ["embeddings", "rag"]}
+{"id": "q2", "query": "milliseconds query benchmark", "relevant": ["latency"]}
+{"id": "q3", "query": "agent tool task success", "relevant": ["agents"]}
+{"id": "q4", "query": "prompt variant score", "relevant": ["prompts"]}

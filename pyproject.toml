@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "embeddings-benchmark"
+version = "0.1.0"
+description = "Local-first embedding model comparison with Recall@k and timing metrics."
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+embeddings-benchmark = "embeddings_benchmark.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
