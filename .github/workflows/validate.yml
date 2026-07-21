@@ -4,11 +4,17 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -17,4 +23,7 @@ jobs:
       - name: Run tests
         run: python -m unittest discover -s tests -v
       - name: Run benchmark
-        run: python -m embeddings_benchmark benchmark --output benchmarks/results/embeddings-baseline.json
+        run: python -m embeddings_benchmark benchmark --k 3 --output benchmarks/results/embeddings-baseline.json
+      - name: Validate project
+        shell: pwsh
+        run: ./tools/validate-project.ps1 -SkipDocker

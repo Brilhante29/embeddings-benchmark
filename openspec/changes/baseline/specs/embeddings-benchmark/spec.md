@@ -1,30 +1,29 @@
 # embeddings-benchmark Specification
 
-## Purpose
+## Requirement: reproducible portfolio proof
 
-Embedding comparison benchmark that ranks deterministic retrieval models by Recall@k, indexing time, and query time.
+The system SHALL expose local and Docker paths that write a benchmark JSON under `benchmarks/results/` without paid credentials or model downloads.
 
-## Requirements
+## Requirement: correct and comparable retrieval metrics
 
-### Requirement: reproducible portfolio proof
+The system SHALL compute Recall@k as the fraction of all relevant documents returned in the first `k` positions and SHALL compare encoders on identical fixtures and ranking rules.
 
-The system SHALL expose a local-first path that proves the primary benchmark
-declared in `project.yaml` without paid credentials.
+### Scenario: partially recovered relevance set
 
-#### Scenario: default verification
+- GIVEN a query has two relevant documents
+- WHEN one relevant document appears in the top `k`
+- THEN the query Recall@k is `0.5`
 
-- GIVEN the repository is checked out with its committed fixtures
-- WHEN the documented Docker or local benchmark command runs
-- THEN a JSON result is written under `benchmarks/results/`
-- AND the README reports the same measured number
+## Requirement: replaceable encoders
 
-### Requirement: replaceable integrations
+The system SHALL access encoder implementations through one vectorizer protocol.
 
-The system SHALL keep external providers behind ports or adapters whenever a
-provider is not part of the core claim.
+### Scenario: future neural adapter
 
-#### Scenario: adapter substitution
+- GIVEN a local or neural adapter implements the protocol
+- WHEN the benchmark selects it
+- THEN ranking and metric code remain unchanged
 
-- GIVEN a local adapter and a future real-provider adapter implement the same port
-- WHEN either adapter is selected by configuration
-- THEN the application use cases keep the same observable contract
+## Requirement: honest scope
+
+The committed baseline SHALL identify every included encoder as non-neural and SHALL NOT claim transformer semantic quality.

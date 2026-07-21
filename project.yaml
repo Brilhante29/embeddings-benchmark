@@ -5,13 +5,15 @@ program:
   narrative_fit: Compares retrieval encoders before the platform chooses a production embedding provider.
   shared_assets:
     - benchmark fixture
-    - deterministic local evaluator
+    - deterministic vectorizer protocol
     - portfolio-compatible result JSON
-status: published
-claim: Embedding comparison benchmark that ranks deterministic retrieval models by Recall@k, indexing time, and query time.
+status: benchmarked
+claim: Deterministic non-neural retrieval-vectorizer comparison with correct Recall@k, indexing time, and query time.
 stack:
   - python
-  - deterministic-embeddings
+  - sparse-vectorizers
+  - tf-idf
+  - feature-hashing
   - jsonl
   - docker
 language_profile:
@@ -29,10 +31,10 @@ decision_brain:
     review_path: sdd/reuse-improvement-review.md
     current_status: backlog_recorded
   principles:
-    coupling_rule: Core evaluation code depends only on standard-library interfaces and local fixtures.
+    coupling_rule: Benchmark orchestration depends on a vectorizer protocol, not concrete provider SDKs.
     solid: [srp, ocp, lsp, isp, dip]
-    simplicity_rule: Use deterministic fixtures before adding external LLM, vector, or billing providers.
-    testability_rule: Benchmark logic is callable without HTTP, cloud, or paid credentials.
+    simplicity_rule: Use deterministic vectorizers before adding downloaded neural models.
+    testability_rule: Benchmark logic is callable without HTTP, cloud, paid credentials, or model downloads.
   stack_profile: python
   api_style: cli-first
   messaging: none
@@ -40,15 +42,15 @@ decision_brain:
     mode: none
     local_provider: kumo
     real_provider_target: none
-    adapter_rule: Future provider integrations must stay behind ports/adapters.
+    adapter_rule: Future neural and provider integrations stay behind the vectorizer protocol.
   database: fixture-files
   runtime: python-cli
-  library_policy: Prefer standard library for baseline reproducibility; add provider libraries only behind adapters.
+  library_policy: Keep the deterministic baseline in the standard library; add neural encoders only behind the vectorizer protocol.
   record_path: sdd/technical-decision.md
 architecture:
-  style: clean-architecture
-  reason: The metric and benchmark use cases must stay independent from CLI, fixtures, and future providers.
-  dependency_rule: Domain metrics and application benchmark orchestration do not import interface code.
+  style: ports-and-adapters
+  reason: Recall and ranking must remain independent from encoder implementation and CLI concerns.
+  dependency_rule: Benchmark orchestration imports the vectorizer protocol; the CLI depends inward.
 design_system:
   tokens: .portfolio/design-system/tokens.yaml
   readme_components: [readme_header, benchmark_card, architecture_card, references_table]
@@ -59,7 +61,7 @@ reuse:
 benchmark:
   primary_metric: best_recall_at_3
   unit: ratio
-  command: python -m embeddings_benchmark benchmark --output benchmarks/results/embeddings-baseline.json
+  command: python -m embeddings_benchmark benchmark --k 3 --output benchmarks/results/embeddings-baseline.json
   result_path: benchmarks/results/embeddings-baseline.json
 release:
   docker: Dockerfile

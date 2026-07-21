@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "embeddings-benchmark"
-version = "0.1.0"
-description = "Local-first embedding model comparison with Recall@k and timing metrics."
+version = "0.2.0"
+description = "Local-first non-neural retrieval vectorizer comparison with correct Recall@k and timing metrics."
 requires-python = ">=3.10"
 dependencies = []
 

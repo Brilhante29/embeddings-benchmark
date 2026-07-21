@@ -1,21 +1,22 @@
-# Change Tasks: baseline
+# Change Tasks: correct-vectorizer-baseline
 
 ## Planning
 
-- [x] Read `project.yaml` and the selected component pack.
-- [x] Generate the SDD, OpenSpec, and agent context artifacts.
-- [ ] Confirm the architecture and rejected alternatives.
+- [x] Record non-neural scope and rejected alternatives.
+- [x] Define correct Recall@k semantics and fair comparison rules.
+- [x] Preserve a provider-neutral vectorizer boundary.
 
 ## Implementation
 
-- [ ] Implement the smallest useful slice.
-- [ ] Keep domain/use-case code independent from infrastructure.
-- [ ] Add or update tests for the observable contract.
-- [ ] Update the benchmark and commit the JSON result.
+- [x] Implement word TF-IDF, character TF-IDF, and feature hashing.
+- [x] Add per-query Recall@k samples and shared result fields.
+- [x] Add tests for partial relevance recovery and encoder output.
+- [x] Commit-ready benchmark JSON and matching README number.
 
 ## Verification
 
-- [ ] Run the Docker path.
-- [ ] Run tests and project validation.
+- [x] Run compile and unit tests.
+- [x] Run `tools/validate-project.ps1 -SkipDocker`.
+- [x] Build and execute `embeddings-benchmark:audit`.
 - [ ] Run `openspec validate --strict` when the CLI is installed.
-- [ ] Review `sdd/reuse-improvement-review.md` and patch, backlog, or reject the finding.
+- [ ] Verify remote CI after publication.

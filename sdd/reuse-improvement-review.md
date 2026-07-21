@@ -15,20 +15,9 @@ Project: `8 - embeddings-benchmark`
 
 | Finding | Classification | Kit Area | Action | Status |
 |---|---|---|---|---|
-| AI evaluation repos share the same local-first Python benchmark skeleton: fixtures, CLI, Docker, tests, and JSON result. | `backlog` | `templates`, `validation` | Promote to a reusable Python benchmark template after this macro confirms all five shapes. | pending |
-| Project-specific fixture content should remain in each repo. | `reject` | `templates` | Keep domain examples local to preserve each repo's proof. | done |
-
-## Patch Now Decisions
-
-- None; the kit already enforces the reuse-improvement gate.
-
-## Backlog Decisions
-
-- Add a reusable Python benchmark project template if the same skeleton remains stable after the macro is complete.
-
-## Rejected Improvements
-
-- Do not move this repo's fixture data into the kit.
+| AI evaluation repositories need one enforced top-level benchmark-result contract. | `backlog` | `contracts`, `validation` | Validate required fields and tracked evidence in the kit publication gate. | pending |
+| Retrieval projects need a reusable Recall@k definition that counts every relevant item. | `backlog` | `harness` | Promote the tested metric semantics after RAG adopts the same definition. | pending |
+| Encoder implementations and fixtures are project-specific. | `reject` | `templates` | Keep them in this repository behind the shared port. | done |
 
 ## Final Gate
 

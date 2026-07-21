@@ -4,15 +4,14 @@
 
 - Metric: `best_recall_at_3`
 - Unit: `ratio`
-- Result: best_recall_at_3 = 1.00
+- Result: `1.0`
+- Best encoder: `character-tfidf`
 - Result path: `benchmarks/results/embeddings-baseline.json`
 
 ## Command
 
-    python -m embeddings_benchmark benchmark --output benchmarks/results/embeddings-baseline.json
+    python -m embeddings_benchmark benchmark --k 3 --output benchmarks/results/embeddings-baseline.json
 
-## Evidence
+## Interpretation
 
-
-
-The README/post number must come from the committed benchmark JSON, not from manual text.
+All four query-level recall samples were `1.0` for character TF-IDF. Word TF-IDF and feature hashing each scored `0.875` because the two-relevant-document query recovered only one relevant item. The fixture is a regression set, not a production-quality claim.

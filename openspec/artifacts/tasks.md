@@ -1,23 +1,19 @@
 # Tasks: embeddings-benchmark
 
-## Planning
-
-- [x] Read `project.yaml`.
-- [x] Select component pack `ai-evaluation-retrieval`.
-- [x] Generate OpenSpec-style artifacts.
-- [x] Generate article draft.
-- [x] Compare article voice against existing docs.
-
 ## Implementation
 
-- [x] Implement the measurable claim without breaking the recorded architecture boundary.
-- [x] Keep local skills and `.portfolio/` as primary.
-- [x] Record external references in `REFERENCES.md`.
-- [x] Commit benchmark JSON and the matching README number.
+- [x] Replace set-overlap heuristics with numeric vectorizers.
+- [x] Correct Recall@k and commit per-query samples.
+- [x] Align README, SDD, OpenSpec, workflow, and result contract.
+
+## Local Verification
+
+- [x] Unit tests and project validator pass.
+- [x] Docker build and default run pass.
+- [x] Benchmark evidence matches the README.
 
 ## Publication
 
-- [ ] Validate project.
-- [ ] Confirm published CI is green.
-- [ ] Confirm article uses committed benchmark result.
-- [ ] Confirm `voice-check.md` verdict is aligned or intentionally overridden.
+- [ ] Push the commit.
+- [ ] Confirm remote CI is green.
+- [ ] Promote status only after publication evidence exists.
