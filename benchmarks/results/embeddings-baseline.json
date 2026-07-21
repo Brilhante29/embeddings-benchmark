@@ -1,26 +1,85 @@
 {
   "project": "embeddings-benchmark",
+  "metric": "best_recall_at_3",
+  "value": 1.0,
+  "unit": "ratio",
+  "timestamp": "2026-07-21T18:33:06.913288Z",
+  "command": "python -m embeddings_benchmark benchmark --corpus data/fixtures/corpus.jsonl --queries data/fixtures/queries.jsonl --k 3 --output benchmarks/results/embeddings-baseline.json",
+  "repeat": 1,
+  "samples": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "summary": {
+    "corpus_size": 6,
+    "query_count": 4,
+    "model_count": 3,
+    "k": 3,
+    "best_recall": 1.0
+  },
+  "environment": {
+    "python": "3.10.11",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "implementation": "cpython",
+    "encoder_scope": "non-neural-local-vectorizers"
+  },
+  "scope": {
+    "neural_models_included": false,
+    "statement": "This baseline compares deterministic non-neural vectorizers; it does not claim neural semantic embedding quality."
+  },
   "primary_metric": "best_recall_at_3",
   "best_recall_at_3": 1.0,
-  "best_model": "keyword-overlap",
+  "best_model": "character-tfidf",
   "models": [
     {
-      "model": "keyword-overlap",
-      "recall_at_3": 1.0,
-      "indexing_time_ms": 0.1927,
-      "query_time_ms": 0.0123
+      "model": "word-tfidf",
+      "family": "tf-idf",
+      "scope": "non-neural",
+      "description": "Word unigram/bigram TF-IDF fitted on the corpus.",
+      "feature_count": 91,
+      "recall_at_3": 0.875,
+      "recall_samples": [
+        0.5,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "indexing_time_ms": 2.5961,
+      "query_time_ms": 0.1936
     },
     {
-      "model": "char-trigram",
+      "model": "character-tfidf",
+      "family": "tf-idf",
+      "scope": "non-neural",
+      "description": "Character 3-5 gram TF-IDF fitted on the corpus.",
+      "feature_count": 841,
       "recall_at_3": 1.0,
-      "indexing_time_ms": 0.7808,
-      "query_time_ms": 0.0575
+      "recall_samples": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "indexing_time_ms": 17.725,
+      "query_time_ms": 1.8661
     },
     {
-      "model": "hybrid-token-char",
-      "recall_at_3": 1.0,
-      "indexing_time_ms": 0.1017,
-      "query_time_ms": 0.0299
+      "model": "feature-hashing",
+      "family": "hashing-vectorizer",
+      "scope": "non-neural",
+      "description": "Signed deterministic word unigram/bigram hashing.",
+      "feature_count": 512,
+      "recall_at_3": 0.875,
+      "recall_samples": [
+        0.5,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "indexing_time_ms": 3.2034,
+      "query_time_ms": 0.3698
     }
   ]
 }
