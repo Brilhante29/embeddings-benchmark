@@ -1,0 +1,64 @@
+{
+  "benchmark_id": "dense-recall-v1",
+  "comparability_key": "embeddings:recall-at-3:dense-onnx-v1:4-queries",
+  "environment": {
+    "architecture": "amd64",
+    "hardware_class": "local-docker-desktop",
+    "runtime": "python-3.12.13-slim"
+  },
+  "execution": {
+    "command": "docker run --network none --name embeddings-pub-3a6ec33 embeddings-benchmark:publication-3a6ec33",
+    "duration_seconds": 3.117484,
+    "exit_code": 0,
+    "repeat": 5,
+    "started_at": "2026-08-03T06:56:02.342517Z"
+  },
+  "metrics": [
+    {
+      "direction": "higher_is_better",
+      "failures": 0,
+      "name": "best_recall_at_3",
+      "samples": [
+        0.5,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "summary": {
+        "best_model": "BAAI/bge-small-en-v1.5",
+        "best_recall": 0.875,
+        "corpus_size": 6,
+        "fastest_model": "BAAI/bge-small-en-v1.5",
+        "fastest_query_time_ms": 3.8599,
+        "k": 3,
+        "model_count": 2,
+        "profile": "dense",
+        "query_count": 4,
+        "timing_repeat": 5,
+        "warmup_iterations": 1
+      },
+      "unit": "ratio",
+      "value": 0.875
+    }
+  ],
+  "project": "embeddings-benchmark",
+  "provenance": {
+    "artifact_digest": "sha256:3f6cbb3beb7818568bf63257e526fc4ce4485de5c2cb4bb8b62e19300048f284",
+    "clean_tree": true,
+    "dependency_lock_digest": "sha256:c176d3b8300ddfe4fab93eb9c13cd911573fcdda1c253a439ec60dd4ed78fb6a",
+    "image_digest": "sha256:b45c4fdb73e30e1f51d8f7abc0739d0a6c7fb8ff3c4ce44cfbdfc72aa094de00",
+    "image_ref": "embeddings-benchmark:publication-3a6ec33@sha256:b45c4fdb73e30e1f51d8f7abc0739d0a6c7fb8ff3c4ce44cfbdfc72aa094de00",
+    "producer": "local",
+    "source_commit": "3a6ec33ec9e2468c2f9b29f2e015d4c98b91a437"
+  },
+  "run_id": "0f3d95b6-5519-451e-b1a3-79c0331204c3",
+  "schema_version": 2,
+  "workload": {
+    "concurrency": 1,
+    "config_digest": "sha256:d8398fe07602eb0cbc847125631b36d3f4ffcf6cc19440e3ba419591f207ed3a",
+    "fixture_digest": "sha256:58ee291fc5828dd4319bb9f71856b916a97067542e2f64d4ec9bf2da31255db0",
+    "measured_iterations": 4,
+    "version": "embedding-fixture-v1",
+    "warmup_iterations": 1
+  }
+}

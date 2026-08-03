@@ -10,5 +10,5 @@
 - [x] Run the container offline as a non-root user.
 - [x] Add shared V2 evidence producer, schema validation, and publication skill.
 - [x] Run four unit tests and source benchmark.
-- [ ] Generate V2 from the clean source commit.
-- [ ] Verify GitHub Actions on the exact publication SHA.
+- [x] Generate V2 from the clean source commit.
+- [x] Verify the source gate in GitHub Actions run `30791776789`; require the publication commit to pass on its exact SHA.

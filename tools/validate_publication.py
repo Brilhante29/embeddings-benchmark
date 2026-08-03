@@ -102,16 +102,26 @@ def main() -> None:
     require(v2.get("project") == "embeddings-benchmark", "unexpected V2 project")
     require(v2.get("benchmark_id") == "dense-recall-v1", "unexpected benchmark id")
     require(v1.get("metric") == "best_recall_at_3", "unexpected primary metric")
-    require(0 <= v1.get("value", -1) <= 1, "recall must be a ratio")
+    require(v1.get("value") == 0.875, "unexpected Recall@3 baseline")
     require(v1.get("summary", {}).get("query_count") == 4, "expected four queries")
     require(v1.get("summary", {}).get("model_count") == 2, "expected two dense models")
     require(v1.get("summary", {}).get("profile") == "dense", "expected dense profile")
     require(v1.get("scope", {}).get("neural_models_included") is True, "neural models missing")
     models = v1.get("models", [])
     require({model.get("model") for model in models} == EXPECTED_MODELS, "model set mismatch")
-    require(all(model.get("scope") == "neural-local" for model in models), "non-neural publication model")
+    require(
+        all(model.get("scope") == "neural-local" for model in models),
+        "non-neural publication model",
+    )
+    require(
+        all(model.get("recall_at_3") == 0.875 for model in models),
+        "model Recall@3 mismatch",
+    )
     require(all(model.get("query_time_ms", 0) > 0 for model in models), "invalid query timing")
-    require(all(len(model.get("query_time_samples_ms", [])) == 5 for model in models), "timing repeat mismatch")
+    require(
+        all(len(model.get("query_time_samples_ms", [])) == 5 for model in models),
+        "timing repeat mismatch",
+    )
 
     metric = v2["metrics"][0]
     require(metric["name"] == "best_recall_at_3", "unexpected V2 metric")
@@ -131,6 +141,10 @@ def main() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     require(str(v1["value"]) in readme, "README recall does not match evidence")
     require(v1["summary"]["fastest_model"] in readme, "README fastest model mismatch")
+    require(
+        all(str(model["query_time_ms"]) in readme for model in models),
+        "README model latencies do not match raw evidence",
+    )
     require(
         "result_path: benchmarks/publication/embeddings-baseline-v2.json" in manifest,
         "manifest V2 path mismatch",

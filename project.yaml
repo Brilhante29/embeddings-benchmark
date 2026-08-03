@@ -7,7 +7,7 @@ program:
     - benchmark fixture
     - provider-neutral batched vectorizer protocol
     - portfolio-compatible result JSON
-status: benchmarked
+status: published
 claim: CPU-local FastEmbed/ONNX comparison of BGE-small and MiniLM with correct Recall@3, cold indexing time, and end-to-end query latency.
 stack:
   - python
@@ -64,7 +64,7 @@ benchmark:
   primary_metric: best_recall_at_3
   unit: ratio
   command: python -m embeddings_benchmark benchmark --profile dense --k 3 --repeat 5 --warmup 1 --output benchmarks/results/embeddings-baseline.json
-  result_path: benchmarks/results/embeddings-baseline.json
+  result_path: benchmarks/publication/embeddings-baseline-v2.json
 release:
   docker: Dockerfile
   no_secret_default_path: true

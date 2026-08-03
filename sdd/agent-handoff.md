@@ -18,4 +18,4 @@ Project: `8 - embeddings-benchmark`
 
 ## Next Action
 
-Commit the source slice, build that exact SHA, generate V2 evidence with the shared producer, validate provenance, commit publication docs, push, and verify exact-head CI.
+Validate V2 provenance against Git blobs, commit publication evidence, push, and verify every GitHub Actions step on the exact final SHA.

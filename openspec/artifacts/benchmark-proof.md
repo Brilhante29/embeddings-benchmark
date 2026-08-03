@@ -7,7 +7,8 @@
 - Result: `0.875`
 - Models: `BAAI/bge-small-en-v1.5`, `sentence-transformers/all-MiniLM-L6-v2`
 - Quality outcome: tie at `0.875`
-- Fastest source run: BGE-small at median `3.9213 ms/query`
+- Fastest source run: BGE-small at median `3.8599 ms/query`
+- Publication result: `benchmarks/publication/embeddings-baseline-v2.json`
 - Raw result: `benchmarks/results/embeddings-baseline.json`
 
 ## Command
@@ -16,4 +17,4 @@
 
 ## Interpretation
 
-Both dense models recovered the same relevant documents. BGE-small was `4.80x` faster on the measured end-to-end query path, while MiniLM had lower cold indexing time in this run. Timing is hardware-specific; comparisons require the same workload key and Docker runtime.
+Both dense models recovered the same relevant documents. BGE-small was `4.46x` faster on the measured end-to-end query path, while MiniLM had lower cold indexing time in this run. Timing is hardware-specific; comparisons require the same workload key and Docker runtime.

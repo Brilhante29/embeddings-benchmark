@@ -24,11 +24,11 @@ Select a retrieval encoder from measured quality/runtime tradeoffs before the AI
 
 ## Default Demo Path
 
-- Status: benchmarked
+- Status: published
 - Runtime: Python 3.12.13 / FastEmbed 0.8.0 / ONNX CPU
 - Benchmark command: `python -m embeddings_benchmark benchmark --profile dense --k 3 --repeat 5 --warmup 1 --output benchmarks/results/embeddings-baseline.json`
 
 ## Public Proof
 
-- Benchmark: both models reached `Recall@3 = 0.875`; BGE-small was `4.80x` faster on median query latency in the source run.
-- Result path: `benchmarks/results/embeddings-baseline.json`
+- Benchmark: both models reached `Recall@3 = 0.875`; BGE-small was `4.46x` faster on median query latency in the source run.
+- Result path: `benchmarks/publication/embeddings-baseline-v2.json`
