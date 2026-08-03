@@ -4,14 +4,16 @@
 
 - Metric: `best_recall_at_3`
 - Unit: `ratio`
-- Result: `1.0`
-- Best encoder: `character-tfidf`
-- Result path: `benchmarks/results/embeddings-baseline.json`
+- Result: `0.875`
+- Models: `BAAI/bge-small-en-v1.5`, `sentence-transformers/all-MiniLM-L6-v2`
+- Quality outcome: tie at `0.875`
+- Fastest source run: BGE-small at median `3.9213 ms/query`
+- Raw result: `benchmarks/results/embeddings-baseline.json`
 
 ## Command
 
-    python -m embeddings_benchmark benchmark --k 3 --output benchmarks/results/embeddings-baseline.json
+    python -m embeddings_benchmark benchmark --profile dense --k 3 --repeat 5 --warmup 1 --output benchmarks/results/embeddings-baseline.json
 
 ## Interpretation
 
-All four query-level recall samples were `1.0` for character TF-IDF. Word TF-IDF and feature hashing each scored `0.875` because the two-relevant-document query recovered only one relevant item. The fixture is a regression set, not a production-quality claim.
+Both dense models recovered the same relevant documents. BGE-small was `4.80x` faster on the measured end-to-end query path, while MiniLM had lower cold indexing time in this run. Timing is hardware-specific; comparisons require the same workload key and Docker runtime.

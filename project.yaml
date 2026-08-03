@@ -2,24 +2,26 @@ id: 8
 name: embeddings-benchmark
 program:
   id: ai-evaluation-retrieval
-  narrative_fit: Compares retrieval encoders before the platform chooses a production embedding provider.
+  narrative_fit: Compares two real local dense embedding models before the platform chooses a production retrieval encoder.
   shared_assets:
     - benchmark fixture
-    - deterministic vectorizer protocol
+    - provider-neutral batched vectorizer protocol
     - portfolio-compatible result JSON
 status: benchmarked
-claim: Deterministic non-neural retrieval-vectorizer comparison with correct Recall@k, indexing time, and query time.
+claim: CPU-local FastEmbed/ONNX comparison of BGE-small and MiniLM with correct Recall@3, cold indexing time, and end-to-end query latency.
 stack:
   - python
+  - fastembed-0.8.0
+  - onnxruntime
+  - bge-small-en-v1.5
+  - all-minilm-l6-v2
   - sparse-vectorizers
-  - tf-idf
-  - feature-hashing
   - jsonl
   - docker
 language_profile:
   primary: python
   secondary: []
-  reason: Deterministic evaluation logic is packaged as testable Python use cases with a CLI benchmark.
+  reason: Python packages the ML evaluation loop, FastEmbed adapters, tests, CLI, and publication tooling with a pinned CPU runtime.
 decision_brain:
   agent_graph:
     mode: principal-agent-orchestrated
@@ -29,12 +31,12 @@ decision_brain:
   reuse_improvement_loop:
     source: .portfolio/decision-brain/reuse-improvement-loop.yaml
     review_path: sdd/reuse-improvement-review.md
-    current_status: backlog_recorded
+    current_status: reviewed
   principles:
-    coupling_rule: Benchmark orchestration depends on a vectorizer protocol, not concrete provider SDKs.
+    coupling_rule: Benchmark orchestration depends on a vectorizer protocol, not FastEmbed or concrete provider SDKs.
     solid: [srp, ocp, lsp, isp, dip]
-    simplicity_rule: Use deterministic vectorizers before adding downloaded neural models.
-    testability_rule: Benchmark logic is callable without HTTP, cloud, paid credentials, or model downloads.
+    simplicity_rule: Compare the smallest useful dense CPU models and retain sparse controls; do not add infrastructure outside the measured claim.
+    testability_rule: Metrics run with fakes or sparse controls; the Docker benchmark runs offline with baked model artifacts.
   stack_profile: python
   api_style: cli-first
   messaging: none
@@ -42,15 +44,15 @@ decision_brain:
     mode: none
     local_provider: kumo
     real_provider_target: none
-    adapter_rule: Future neural and provider integrations stay behind the vectorizer protocol.
+    adapter_rule: Local and hosted embedding integrations stay behind the batched vectorizer protocol.
   database: fixture-files
   runtime: python-cli
-  library_policy: Keep the deterministic baseline in the standard library; add neural encoders only behind the vectorizer protocol.
+  library_policy: Use FastEmbed 0.8.0 for lightweight CPU ONNX inference; keep provider code behind the vectorizer port and retain sparse controls.
   record_path: sdd/technical-decision.md
 architecture:
   style: ports-and-adapters
-  reason: Recall and ranking must remain independent from encoder implementation and CLI concerns.
-  dependency_rule: Benchmark orchestration imports the vectorizer protocol; the CLI depends inward.
+  reason: Recall, timing policy, and ranking remain independent from FastEmbed, model construction, and CLI concerns.
+  dependency_rule: Benchmark orchestration imports only the vectorizer protocol; FastEmbed and CLI remain outer adapters.
 design_system:
   tokens: .portfolio/design-system/tokens.yaml
   readme_components: [readme_header, benchmark_card, architecture_card, references_table]
@@ -61,7 +63,7 @@ reuse:
 benchmark:
   primary_metric: best_recall_at_3
   unit: ratio
-  command: python -m embeddings_benchmark benchmark --k 3 --output benchmarks/results/embeddings-baseline.json
+  command: python -m embeddings_benchmark benchmark --profile dense --k 3 --repeat 5 --warmup 1 --output benchmarks/results/embeddings-baseline.json
   result_path: benchmarks/results/embeddings-baseline.json
 release:
   docker: Dockerfile

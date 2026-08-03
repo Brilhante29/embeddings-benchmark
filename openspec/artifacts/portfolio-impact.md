@@ -1,27 +1,5 @@
-# Portfolio Impact: embeddings-benchmark
+# Portfolio Impact
 
-## Program
+This repository proves practical embedding model selection rather than only metric implementation: two neural models, local CPU inference, a provider boundary, quality/latency tradeoffs, pinned supply chain, offline Docker, and provenance-bound evidence.
 
-- Program id: `ai-evaluation-retrieval`
-- Program name: AI Evaluation and Retrieval Systems
-- Component pack: `ai-evaluation-retrieval`
-
-## System Story
-
-Compares retrieval encoders before the platform chooses a production embedding provider.
-
-This repository is not a standalone demo. It is one part of the AI Evaluation and Retrieval Systems system and should produce reusable fixtures, benchmark patterns, and decisions for later repositories.
-
-## Proficiency Signal
-
-- Primary profile: `python`
-- Stack profile: `python`
-- Stack:
-- python
-- deterministic-embeddings
-- jsonl
-- docker
-
-## Post Angle
-
-Open with best_recall_at_3 = 1.00, then explain why the architecture and local-first path make the result reproducible.
+Post lead: both models tied at Recall@3 `0.875`, but BGE-small was `4.80x` faster on median end-to-end query latency in the source run. Then show why the architecture permits another encoder without changing the metric core and why the tiny fixture limits the claim.

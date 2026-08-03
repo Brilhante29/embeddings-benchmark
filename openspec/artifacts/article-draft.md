@@ -1,15 +1,11 @@
-# #8 embeddings-benchmark: best_recall_at_3 = 1.00
+# #8 embeddings-benchmark: same Recall@3, 4.80x latency gap
 
-Embedding comparison benchmark that ranks deterministic retrieval models by Recall@k, indexing time, and query time.
+Two real 384-dimensional embedding models reached the same `Recall@3 = 0.875` on an identical local fixture. In the source Docker run, BGE-small completed the end-to-end query path at a median `3.9213 ms/query`; MiniLM required `18.8207 ms/query`.
 
-This repository belongs to the AI Evaluation and Retrieval Systems program. Its job is narrow: prove the measurable claim through the selected component pack before adding unrelated infrastructure or features.
+The useful result is not that one model won quality on four queries. It is that a model decision can be made with explicit quality, latency, cold-start, license, size, fixture, and runtime evidence instead of brand preference.
 
-The benchmark is the proof. best_recall_at_3 = 1.00.  The result is stored in `benchmarks/results/embeddings-baseline.json` and can be reproduced from the Docker/local path.
+FastEmbed 0.8.0 and ONNX Runtime keep CPU inference local. Model construction lives behind a vectorizer port; Recall@k, cosine ranking, timing policy, CLI, and evidence generation do not import provider code. The same core can evaluate a future local or hosted adapter without rewriting metric semantics.
 
-The important architecture decision is clean-architecture. The metric and benchmark use cases must stay independent from CLI, fixtures, and future providers.
+The Docker build preloads both model artifacts. The benchmark then runs as an unprivileged user with networking disabled. V2 evidence binds the source commit, image digest, fixtures, benchmark config, Linux dependency lock, and raw JSON.
 
-The default path stays local-first. The project uses python, exposes cli-first, uses messaging mode `none`, and stores data with `fixture-files`. The dependency rule is explicit: Domain metrics and application benchmark orchestration do not import interface code.
-
-The rejected work matters as much as the implemented work. Anything that does not improve the benchmark stays out of the first version.
-
-Post angle: start with the number, show the architecture boundary, then explain which future adapter can be added without changing the core use cases.
+Limit: six documents and four queries make this a regression baseline, not production model selection. The next scale step is a reviewed multilingual dataset with process-level repetitions and confidence intervals, not more infrastructure.

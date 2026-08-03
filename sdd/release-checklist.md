@@ -1,10 +1,13 @@
 # Release Checklist
 
-- [x] README opens with project number, claim, and benchmark number.
-- [x] Baseline JSON is tracked and contract-compatible.
-- [x] Tests cover partial Recall@k and all vectorizer families.
-- [x] Docker image `embeddings-benchmark:audit` built and executed on 2026-07-21.
-- [ ] Remote CI verified on the published branch.
+- [x] README opens with project number, claim, and measured numbers.
+- [x] Two real dense models run behind the vectorizer port.
+- [x] Linux dependencies, Docker base, and model set are pinned.
+- [x] Unit tests cover Recall@k, sparse controls, dense adapter substitution, and result contract.
+- [x] Docker image executes the dense benchmark offline as a non-root user.
+- [x] Raw benchmark JSON is tracked and contract-compatible.
+- [ ] V2 publication artifact generated from a clean source commit.
+- [ ] Remote CI verified on the exact publication SHA.
 - [x] Reuse improvement review is complete.
 
-Status remains `benchmarked` until remote publication evidence is verified.
+Status remains `benchmarked` until V2 evidence and exact-head remote CI both pass.

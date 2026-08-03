@@ -1,12 +1,19 @@
 # Architecture Decision
 
-Decision: ports-and-adapters, CLI-first benchmark with a sparse-vectorizer port.
+Decision: ports-and-adapters, CLI-first benchmark with one vectorizer port.
 
-Rationale: ranking and Recall@k are independent from encoder construction. The baseline implements word TF-IDF, character TF-IDF, and deterministic feature hashing with numeric sparse vectors and cosine similarity. CLI, Docker, and future neural/provider adapters depend inward.
+Rationale: retrieval metrics and ranking policy must remain independent from model construction. FastEmbed is isolated in a lazy adapter; BGE-small, MiniLM, and deterministic sparse controls satisfy the same protocol. CLI and Docker select profiles but depend inward on the benchmark use case.
+
+SOLID and simplicity:
+
+- SRP: fixture validation, vector generation, ranking, metrics, and presentation are separate concerns.
+- OCP/DIP: adding a local or hosted model requires a new adapter, not metric changes.
+- LSP/ISP: every adapter supplies only corpus and batched-query vectorization plus metadata.
+- KISS/YAGNI: no vector database, HTTP API, queue, cloud service, or agent graph runs in the measured path.
 
 Rejected:
 
-- Token-set Jaccard: it is a lexical overlap heuristic rather than a vectorizer benchmark.
-- Downloaded transformer model as the default: useful as a later adapter, but too heavy for the credential-free baseline.
-- External managed service: it would make the baseline dependent on credentials and mutable provider behavior.
-- Web UI or messaging: neither contributes to the measured claim.
+- Sparse-only publication: honest as a control, but insufficient for a repository named embeddings benchmark.
+- Sentence Transformers/PyTorch: materially larger runtime for this CPU-focused comparison.
+- Hosted embeddings: credentials, network variance, and mutable pricing would weaken the local baseline.
+- Qdrant server: six documents do not justify introducing storage/network overhead into the encoder comparison.

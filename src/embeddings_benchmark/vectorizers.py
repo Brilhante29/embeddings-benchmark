@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import hashlib
 import math
+import os
 import re
 from collections import Counter
 from dataclasses import dataclass
-from typing import Callable, Iterable, Protocol
+from typing import Any, Callable, Iterable, Protocol
 
 SparseVector = dict[int, float]
 TOKEN_PATTERN = re.compile(r"[a-z0-9]+")
@@ -17,6 +18,9 @@ class EncoderInfo:
     family: str
     scope: str
     description: str
+    model_ref: str | None = None
+    license: str | None = None
+    model_size_mb: int | None = None
 
 
 class Vectorizer(Protocol):
@@ -27,7 +31,7 @@ class Vectorizer(Protocol):
 
     def fit_transform(self, texts: list[str]) -> list[SparseVector]: ...
 
-    def transform(self, text: str) -> SparseVector: ...
+    def transform_many(self, texts: list[str]) -> list[SparseVector]: ...
 
 
 def _word_features(text: str) -> list[str]:
@@ -97,6 +101,9 @@ class TfidfVectorizer:
             raise RuntimeError("vectorizer must be fitted before transform")
         return self._encode(self._analyzer(text))
 
+    def transform_many(self, texts: list[str]) -> list[SparseVector]:
+        return [self.transform(text) for text in texts]
+
     def _encode(self, features: Iterable[str]) -> SparseVector:
         counts = Counter(features)
         weighted = {
@@ -136,6 +143,72 @@ class HashingVectorizer:
             values[index] = values.get(index, 0.0) + sign
         return _normalize({index: value for index, value in values.items() if value})
 
+    def transform_many(self, texts: list[str]) -> list[SparseVector]:
+        return [self.transform(text) for text in texts]
+
+
+class FastEmbedVectorizer:
+    """Lazy FastEmbed adapter; model loading stays outside benchmark policy."""
+
+    def __init__(
+        self,
+        model_name: str,
+        *,
+        license_name: str,
+        model_size_mb: int,
+        model_factory: Callable[[str], Any] | None = None,
+    ) -> None:
+        self.info = EncoderInfo(
+            name=model_name,
+            family="dense-onnx",
+            scope="neural-local",
+            description="Quantized dense text embeddings executed locally with ONNX Runtime.",
+            model_ref=model_name,
+            license=license_name,
+            model_size_mb=model_size_mb,
+        )
+        self._model_name = model_name
+        self._model_factory = model_factory
+        self._model: Any | None = None
+        self._feature_count = 0
+
+    @property
+    def feature_count(self) -> int:
+        return self._feature_count
+
+    def _load_model(self) -> Any:
+        if self._model is not None:
+            return self._model
+        if self._model_factory is not None:
+            self._model = self._model_factory(self._model_name)
+            return self._model
+
+        from fastembed import TextEmbedding
+
+        cache_dir = os.environ.get("FASTEMBED_CACHE_PATH")
+        options: dict[str, Any] = {"model_name": self._model_name}
+        if cache_dir:
+            options["cache_dir"] = cache_dir
+        self._model = TextEmbedding(**options)
+        return self._model
+
+    def _convert(self, values: Any) -> SparseVector:
+        dense = values.tolist() if hasattr(values, "tolist") else list(values)
+        if not dense:
+            raise ValueError(f"{self._model_name} returned an empty vector")
+        self._feature_count = len(dense)
+        return _normalize(
+            {index: float(value) for index, value in enumerate(dense) if value}
+        )
+
+    def fit_transform(self, texts: list[str]) -> list[SparseVector]:
+        model = self._load_model()
+        return [self._convert(vector) for vector in model.passage_embed(texts)]
+
+    def transform_many(self, texts: list[str]) -> list[SparseVector]:
+        model = self._load_model()
+        return [self._convert(vector) for vector in model.query_embed(texts)]
+
 
 def default_vectorizers() -> list[Vectorizer]:
     return [
@@ -158,4 +231,19 @@ def default_vectorizers() -> list[Vectorizer]:
             _character_features,
         ),
         HashingVectorizer(),
+    ]
+
+
+def default_dense_vectorizers() -> list[Vectorizer]:
+    return [
+        FastEmbedVectorizer(
+            "BAAI/bge-small-en-v1.5",
+            license_name="MIT",
+            model_size_mb=67,
+        ),
+        FastEmbedVectorizer(
+            "sentence-transformers/all-MiniLM-L6-v2",
+            license_name="Apache-2.0",
+            model_size_mb=90,
+        ),
     ]

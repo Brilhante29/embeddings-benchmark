@@ -15,12 +15,13 @@ Project: `8 - embeddings-benchmark`
 
 | Finding | Classification | Kit Area | Action | Status |
 |---|---|---|---|---|
-| AI evaluation repositories need one enforced top-level benchmark-result contract. | `backlog` | `contracts`, `validation` | Validate required fields and tracked evidence in the kit publication gate. | pending |
-| Retrieval projects need a reusable Recall@k definition that counts every relevant item. | `backlog` | `harness` | Promote the tested metric semantics after RAG adopts the same definition. | pending |
-| Encoder implementations and fixtures are project-specific. | `reject` | `templates` | Keep them in this repository behind the shared port. | done |
+| Benchmark publication needs source/image/fixture/config/lock/artifact provenance. | `patch_now` | `contracts`, `validation` | Reuse the V2 schema, evidence producer, and exact-head gate. | implemented |
+| Model downloads made repeated Docker builds unnecessarily slow. | `patch_now` | `container patterns` | Separate dependency, model-cache, package, and fixture layers. | implemented locally |
+| Retrieval adapters need batched query/passages semantics without leaking provider APIs into metrics. | `backlog` | `AI evaluation harness` | Promote the proven vectorizer-port pattern after the macro closes. | recorded |
+| Model choices and relevance fixtures are project-specific. | `reject` | `templates` | Keep their content local; reuse only contracts and adapter rules. | done |
 
 ## Final Gate
 
 - [x] Reusable improvements were patched or recorded.
 - [x] Project-specific implementation was not moved into the kit.
-- [x] Validation reflects the required reuse-improvement review gate.
+- [x] Validation reflects dependency locks, publication provenance, tests, and Docker execution.

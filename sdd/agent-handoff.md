@@ -2,22 +2,20 @@
 
 Project: `8 - embeddings-benchmark`
 
-## Current State
+## Current Slice
 
-- Word TF-IDF, character TF-IDF, and feature hashing produce numeric sparse vectors.
-- Recall@k counts every relevant document and is macro-averaged across queries.
-- The baseline result satisfies the shared benchmark-result contract.
-- Scope is explicitly non-neural and local-first.
+- Dense FastEmbed/ONNX profile compares BGE-small and MiniLM on CPU.
+- Sparse profile remains the no-download regression control.
+- Raw benchmark: Recall@3 `0.875` for both models; BGE is the faster measured query path in the source run.
+- Docker preloads model artifacts and runs successfully with `--network none` as UID 10001.
 
-## Continuation Rules
+## Invariants
 
-- Add neural encoders only through `Vectorizer` in `src/embeddings_benchmark/vectorizers.py`.
-- Do not describe these baselines as transformer models or semantic production evidence.
-- Preserve per-query Recall@k samples and the shared top-level result fields.
-- Calibrate larger benchmarks before full runs; avoid heavyweight downloads in the default path.
+- Metrics and ranking never import FastEmbed or provider SDKs.
+- Every model sees identical fixtures, `k`, warmup, repeat count, and timing boundary.
+- Query latency includes embedding, cosine scoring, and ranking; model download is excluded.
+- Publication requires a clean source commit, generated V2 evidence, and exact-head GitHub Actions success.
 
-## Remaining Gates
+## Next Action
 
-- Local tests, benchmark, and project validator must pass after each change.
-- Docker must execute the committed command.
-- Publication remains blocked until the branch is pushed and remote CI is verified.
+Commit the source slice, build that exact SHA, generate V2 evidence with the shared producer, validate provenance, commit publication docs, push, and verify exact-head CI.

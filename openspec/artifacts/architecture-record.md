@@ -22,7 +22,7 @@ Domain metrics and application benchmark orchestration do not import interface c
 
 ## Library Policy
 
-Prefer standard library for baseline reproducibility; add provider libraries only behind adapters.
+Pin FastEmbed/ONNX and model artifacts for the dense baseline; retain standard-library sparse controls and keep every provider behind adapters.
 
 ## Principle Check
 

@@ -1,12 +1,12 @@
 # embeddings-benchmark Specification
 
-## Requirement: reproducible portfolio proof
+## Requirement: reproducible local neural proof
 
-The system SHALL expose local and Docker paths that write a benchmark JSON under `benchmarks/results/` without paid credentials or model downloads.
+The system SHALL expose local and Docker paths that compare two versioned dense embedding models without paid credentials. The built container SHALL complete with networking disabled.
 
 ## Requirement: correct and comparable retrieval metrics
 
-The system SHALL compute Recall@k as the fraction of all relevant documents returned in the first `k` positions and SHALL compare encoders on identical fixtures and ranking rules.
+The system SHALL compute Recall@k as the fraction of all relevant documents returned in the first `k` positions and SHALL compare models on identical fixtures, ranking, warmup, and repetition rules.
 
 ### Scenario: partially recovered relevance set
 
@@ -16,14 +16,14 @@ The system SHALL compute Recall@k as the fraction of all relevant documents retu
 
 ## Requirement: replaceable encoders
 
-The system SHALL access encoder implementations through one vectorizer protocol.
+The system SHALL access dense, sparse, local, or future hosted encoders through one batched vectorizer protocol.
 
-### Scenario: future neural adapter
+### Scenario: provider substitution
 
-- GIVEN a local or neural adapter implements the protocol
+- GIVEN an adapter implements passage and query vectorization
 - WHEN the benchmark selects it
-- THEN ranking and metric code remain unchanged
+- THEN metric, ranking, timing, and output code remain unchanged
 
-## Requirement: honest scope
+## Requirement: honest timing and scope
 
-The committed baseline SHALL identify every included encoder as non-neural and SHALL NOT claim transformer semantic quality.
+The system SHALL exclude model download from measured execution, include embedding plus ranking in query latency, publish warmup/repeat policy, and identify the fixture as a regression baseline rather than production-quality evidence.

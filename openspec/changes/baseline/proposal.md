@@ -1,22 +1,18 @@
-# Change Proposal: correct-vectorizer-baseline
+# Proposal: Real Local Embedding Comparison
 
-Project: `embeddings-benchmark` (#8)
+## Why
 
-## Intent
-
-Replace set-overlap heuristics and binary hit rate with numeric vectorizers, cosine ranking, and mathematically correct Recall@k.
+A sparse-only benchmark did not satisfy the repository name or original portfolio promise to compare embedding models. The project must retain honest local reproducibility while exercising real neural inference.
 
 ## Scope
 
-- In scope: word/character TF-IDF, feature hashing, fair retrieval comparison, shared-contract evidence, and truthful non-neural labeling.
-- Out of scope: paid APIs, downloaded transformer weights, production-scale relevance datasets, and unrelated infrastructure.
+- In scope: BGE-small, MiniLM, FastEmbed/ONNX CPU inference, sparse controls, correct Recall@3, full query timing, locked dependencies, offline Docker, and V2 evidence.
+- Out of scope: paid APIs, vector databases, production-scale relevance datasets, GPU tuning, and unrelated infrastructure.
 
-## Portfolio Impact
+## Architecture
 
-Program: `ai-evaluation-retrieval`.
+Dense and sparse encoders implement one batched vectorizer port. The benchmark owns fixtures, ranking, metrics, warmup/repetition policy, and output contracts. FastEmbed remains an outer adapter loaded lazily.
 
-The result contract and Recall@k semantics can be consumed by sibling evaluation repositories without code coupling.
+## Verification
 
-## Acceptance Signal
-
-Tests demonstrate partial relevance recovery, all three vectorizers produce numeric vectors, and the committed benchmark satisfies the common top-level contract.
+Four unit tests prove Recall semantics, sparse controls, adapter substitutability, and result contracts. Docker must preload both model artifacts, execute with `--network none`, and produce the dense benchmark JSON.

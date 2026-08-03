@@ -2,32 +2,33 @@
 
 ## Measurable Claim
 
-Embedding comparison benchmark that ranks deterministic retrieval models by Recall@k, indexing time, and query time.
+Compare two versioned local dense embedding models by Recall@3, median end-to-end query latency, throughput, and cold indexing time.
 
 ## Problem
 
-Compares retrieval encoders before the platform chooses a production embedding provider.
+Select a retrieval encoder from measured quality/runtime tradeoffs before the AI Evaluation and Retrieval Systems platform adopts one.
 
 ## In Scope
 
-- Use the selected component pack: `ai-evaluation-retrieval`.
-- Keep the project under the AI Evaluation and Retrieval Systems program.
-- Preserve the benchmark contract: `best_recall_at_3` in `benchmarks/results/embeddings-baseline.json`.
-- Keep the default path local-first and reproducible.
+- BGE-small and MiniLM through FastEmbed 0.8.0/ONNX Runtime.
+- Identical committed corpus, queries, relevance judgments, cosine ranking, and `k`.
+- One warmup and five measured repetitions.
+- Provider-neutral vectorizer port plus deterministic sparse controls.
+- Offline non-root Docker execution and V2 publication provenance.
 
 ## Out Of Scope
 
-- Paid credentials for the default demo.
-- External infrastructure that is not required by the benchmark.
-- Replacing local portfolio skills with external components silently.
+- Paid embedding APIs, vector databases, queues, web APIs, or cloud infrastructure.
+- Production-scale or MTEB quality claims from the four-query fixture.
+- Silent replacement of local portfolio skills or publication contracts.
 
 ## Default Demo Path
 
 - Status: benchmarked
-- Runtime: python-cli
-- Benchmark command: `python -m embeddings_benchmark benchmark --output benchmarks/results/embeddings-baseline.json`
+- Runtime: Python 3.12.13 / FastEmbed 0.8.0 / ONNX CPU
+- Benchmark command: `python -m embeddings_benchmark benchmark --profile dense --k 3 --repeat 5 --warmup 1 --output benchmarks/results/embeddings-baseline.json`
 
 ## Public Proof
 
-- Benchmark: best_recall_at_3 = 1.00
+- Benchmark: both models reached `Recall@3 = 0.875`; BGE-small was `4.80x` faster on median query latency in the source run.
 - Result path: `benchmarks/results/embeddings-baseline.json`

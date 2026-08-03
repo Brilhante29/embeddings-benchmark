@@ -1,22 +1,14 @@
-# Change Tasks: correct-vectorizer-baseline
+# Tasks
 
-## Planning
-
-- [x] Record non-neural scope and rejected alternatives.
-- [x] Define correct Recall@k semantics and fair comparison rules.
-- [x] Preserve a provider-neutral vectorizer boundary.
-
-## Implementation
-
-- [x] Implement word TF-IDF, character TF-IDF, and feature hashing.
-- [x] Add per-query Recall@k samples and shared result fields.
-- [x] Add tests for partial relevance recovery and encoder output.
-- [x] Commit-ready benchmark JSON and matching README number.
-
-## Verification
-
-- [x] Run compile and unit tests.
-- [x] Run `tools/validate-project.ps1 -SkipDocker`.
-- [x] Build and execute `embeddings-benchmark:audit`.
-- [ ] Run `openspec validate --strict` when the CLI is installed.
-- [ ] Verify remote CI after publication.
+- [x] Define provider-neutral batched vectorizer protocol.
+- [x] Preserve deterministic sparse controls.
+- [x] Add FastEmbed adapters for BGE-small and MiniLM.
+- [x] Use passage/query embedding semantics.
+- [x] Measure Recall@3, cold indexing, median full query latency, and throughput.
+- [x] Pin Linux dependencies, Python base image, and model set.
+- [x] Preload model artifacts in a cacheable Docker layer.
+- [x] Run the container offline as a non-root user.
+- [x] Add shared V2 evidence producer, schema validation, and publication skill.
+- [x] Run four unit tests and source benchmark.
+- [ ] Generate V2 from the clean source commit.
+- [ ] Verify GitHub Actions on the exact publication SHA.

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "benchmark_id": "dense-recall-v1",
+  "workload_version": "embedding-fixture-v1",
+  "corpus": "data/fixtures/corpus.jsonl",
+  "queries": "data/fixtures/queries.jsonl",
+  "models": [
+    "BAAI/bge-small-en-v1.5",
+    "sentence-transformers/all-MiniLM-L6-v2"
+  ],
+  "k": 3,
+  "measured_queries": 4,
+  "timing_repeat": 5,
+  "warmup_iterations": 1,
+  "concurrency": 1,
+  "comparability_key": "embeddings:recall-at-3:dense-onnx-v1:4-queries"
+}

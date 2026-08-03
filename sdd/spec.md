@@ -2,13 +2,14 @@
 
 ## Claim
 
-Compare deterministic non-neural retrieval vectorizers with correct Recall@k and timing metrics.
+Compare two versioned dense embedding models locally with correct Recall@3, cold indexing time, and end-to-end query latency.
 
 ## Acceptance Criteria
 
-- Runs with `python -m embeddings_benchmark benchmark --k 3 --output benchmarks/results/embeddings-baseline.json`.
-- Runs in Docker without credentials or model downloads.
-- Compares word TF-IDF, character TF-IDF, and feature hashing through one vectorizer protocol.
-- Computes per-query recall as recovered relevant documents divided by all relevant documents.
-- Uses the same corpus, queries, cosine ranking, and `k` for every encoder.
-- Emits the shared benchmark contract and labels the baseline as non-neural.
+- Runs the dense profile with `python -m embeddings_benchmark benchmark --profile dense --k 3 --repeat 5 --warmup 1`.
+- Runs the built Docker image with networking disabled and no credentials.
+- Compares BGE-small and MiniLM through one vectorizer protocol and keeps sparse controls available.
+- Uses `passage_embed` for corpus vectors and `query_embed` for query vectors.
+- Computes per-query Recall@k as recovered relevant documents divided by all relevant documents.
+- Uses identical corpus, queries, cosine ranking, `k`, warmup, and repetition policy for both models.
+- Emits raw and V2 publication contracts with source, image, fixture, config, lock, and artifact digests.
