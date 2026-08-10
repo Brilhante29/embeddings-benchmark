@@ -1,6 +1,6 @@
-# #8 embeddings-benchmark: same Recall@3, 4.46x latency gap
+# #8 embeddings-benchmark: same Recall@3, 4.93x latency gap
 
-Two real 384-dimensional embedding models reached the same `Recall@3 = 0.875` on an identical local fixture. In the source Docker run, BGE-small completed the end-to-end query path at a median `3.8599 ms/query`; MiniLM required `17.211 ms/query`.
+Two real 384-dimensional embedding models reached the same `Recall@3 = 0.875` on an identical local fixture. In the source Docker run, BGE-small completed the end-to-end query path at a median `3.0561 ms/query`; MiniLM required `15.0578 ms/query`.
 
 The useful result is not that one model won quality on four queries. It is that a model decision can be made with explicit quality, latency, cold-start, license, size, fixture, and runtime evidence instead of brand preference.
 

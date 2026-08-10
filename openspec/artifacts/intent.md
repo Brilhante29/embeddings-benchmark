@@ -30,5 +30,5 @@ Select a retrieval encoder from measured quality/runtime tradeoffs before the AI
 
 ## Public Proof
 
-- Benchmark: both models reached `Recall@3 = 0.875`; BGE-small was `4.46x` faster on median query latency in the source run.
+- Benchmark: both models reached `Recall@3 = 0.875`; BGE-small was `4.93x` faster on median query latency in the source run.
 - Result path: `benchmarks/publication/embeddings-baseline-v2.json`

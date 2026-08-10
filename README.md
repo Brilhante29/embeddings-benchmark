@@ -1,6 +1,6 @@
 # #8 embeddings-benchmark
 
-**Benchmark:** both `BAAI/bge-small-en-v1.5` and `sentence-transformers/all-MiniLM-L6-v2` reached `Recall@3 = 0.875`; BGE served the four-query fixture at a median `3.8599 ms/query` versus `17.211 ms/query` for MiniLM (`4.46x` faster). Publication evidence: `benchmarks/publication/embeddings-baseline-v2.json`; raw execution: `benchmarks/results/embeddings-baseline.json`.
+**Benchmark:** both `BAAI/bge-small-en-v1.5` and `sentence-transformers/all-MiniLM-L6-v2` reached `Recall@3 = 0.875`; BGE served the four-query fixture at a median `3.0561 ms/query` versus `15.0578 ms/query` for MiniLM (`4.93x` faster). Publication evidence: `benchmarks/publication/embeddings-baseline-v2.json`; raw execution: `benchmarks/results/embeddings-baseline.json`.
 
 **Claim:** Two revision-locked dense embedding models run locally through FastEmbed/ONNX behind one provider-neutral port and are compared with the same Recall@3 and end-to-end query timing policy.
 

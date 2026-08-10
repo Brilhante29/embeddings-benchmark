@@ -7,11 +7,11 @@
     "runtime": "python-3.12.13-slim"
   },
   "execution": {
-    "command": "docker run --network none --name embeddings-pub-3a6ec33 embeddings-benchmark:publication-3a6ec33",
-    "duration_seconds": 3.117484,
+    "command": "docker run --name pub_embeddings_final --network none embeddings-benchmark:ai-eval-final",
+    "duration_seconds": 2.754349,
     "exit_code": 0,
     "repeat": 5,
-    "started_at": "2026-08-03T06:56:02.342517Z"
+    "started_at": "2026-08-10T01:37:29.087203Z"
   },
   "metrics": [
     {
@@ -29,7 +29,7 @@
         "best_recall": 0.875,
         "corpus_size": 6,
         "fastest_model": "BAAI/bge-small-en-v1.5",
-        "fastest_query_time_ms": 3.8599,
+        "fastest_query_time_ms": 3.0561,
         "k": 3,
         "model_count": 2,
         "profile": "dense",
@@ -43,19 +43,19 @@
   ],
   "project": "embeddings-benchmark",
   "provenance": {
-    "artifact_digest": "sha256:3f6cbb3beb7818568bf63257e526fc4ce4485de5c2cb4bb8b62e19300048f284",
+    "artifact_digest": "sha256:5fa96ac798d8347d8d6e00139732574eb1b981eb6f8f2b90b20607c66a7a91cf",
     "clean_tree": true,
     "dependency_lock_digest": "sha256:c176d3b8300ddfe4fab93eb9c13cd911573fcdda1c253a439ec60dd4ed78fb6a",
-    "image_digest": "sha256:b45c4fdb73e30e1f51d8f7abc0739d0a6c7fb8ff3c4ce44cfbdfc72aa094de00",
-    "image_ref": "embeddings-benchmark:publication-3a6ec33@sha256:b45c4fdb73e30e1f51d8f7abc0739d0a6c7fb8ff3c4ce44cfbdfc72aa094de00",
+    "image_digest": "sha256:01175322141ea10d8d580602f5ac4e7a431302bc17eba89ede7fc067a8941982",
+    "image_ref": "embeddings-benchmark:ai-eval-final@sha256:01175322141ea10d8d580602f5ac4e7a431302bc17eba89ede7fc067a8941982",
     "producer": "local",
-    "source_commit": "3a6ec33ec9e2468c2f9b29f2e015d4c98b91a437"
+    "source_commit": "5a1bfc1b7163719bcdac09f0e08f42fc59b97abb"
   },
-  "run_id": "0f3d95b6-5519-451e-b1a3-79c0331204c3",
+  "run_id": "1a1fae79-7fb8-4616-83a3-a07154b49dbe",
   "schema_version": 2,
   "workload": {
     "concurrency": 1,
-    "config_digest": "sha256:d8398fe07602eb0cbc847125631b36d3f4ffcf6cc19440e3ba419591f207ed3a",
+    "config_digest": "sha256:f8d21d746356c71f43ae4b4bc0743122f002266a10a23fea5985504da7ede643",
     "fixture_digest": "sha256:58ee291fc5828dd4319bb9f71856b916a97067542e2f64d4ec9bf2da31255db0",
     "measured_iterations": 4,
     "version": "embedding-fixture-v1",

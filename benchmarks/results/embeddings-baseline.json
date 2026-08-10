@@ -3,7 +3,7 @@
   "metric": "best_recall_at_3",
   "value": 0.875,
   "unit": "ratio",
-  "timestamp": "2026-08-03T06:56:05.198631Z",
+  "timestamp": "2026-08-10T01:37:31.597670Z",
   "command": "python -m embeddings_benchmark benchmark --corpus data/fixtures/corpus.jsonl --queries data/fixtures/queries.jsonl --k 3 --profile dense --repeat 5 --warmup 1 --output benchmarks/results/embeddings-baseline.json",
   "repeat": 5,
   "samples": [
@@ -20,7 +20,7 @@
     "best_recall": 0.875,
     "best_model": "BAAI/bge-small-en-v1.5",
     "fastest_model": "BAAI/bge-small-en-v1.5",
-    "fastest_query_time_ms": 3.8599,
+    "fastest_query_time_ms": 3.0561,
     "warmup_iterations": 1,
     "timing_repeat": 5,
     "profile": "dense"
@@ -57,16 +57,16 @@
         1.0,
         1.0
       ],
-      "indexing_time_ms": 1218.2445,
-      "query_time_ms": 3.8599,
+      "indexing_time_ms": 1173.998,
+      "query_time_ms": 3.0561,
       "query_time_samples_ms": [
-        4.5961,
-        3.7687,
-        3.4328,
-        4.4886,
-        3.8599
+        3.0561,
+        2.8965,
+        2.6755,
+        3.1683,
+        3.2006
       ],
-      "query_throughput_per_second": 259.08
+      "query_throughput_per_second": 327.21
     },
     {
       "model": "sentence-transformers/all-MiniLM-L6-v2",
@@ -84,16 +84,16 @@
         1.0,
         1.0
       ],
-      "indexing_time_ms": 420.8047,
-      "query_time_ms": 17.211,
+      "indexing_time_ms": 324.0885,
+      "query_time_ms": 15.0578,
       "query_time_samples_ms": [
-        14.7134,
-        17.1487,
-        22.3606,
-        19.0056,
-        17.211
+        15.0578,
+        16.2095,
+        15.4767,
+        14.4967,
+        14.6571
       ],
-      "query_throughput_per_second": 58.1
+      "query_throughput_per_second": 66.41
     }
   ]
 }
