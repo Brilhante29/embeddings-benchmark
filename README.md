@@ -1,8 +1,8 @@
 # #8 embeddings-benchmark
 
-**Claim:** Two versioned dense embedding models run locally through FastEmbed/ONNX behind one provider-neutral port and are compared with the same Recall@3 and end-to-end query timing policy.
-
 **Benchmark:** both `BAAI/bge-small-en-v1.5` and `sentence-transformers/all-MiniLM-L6-v2` reached `Recall@3 = 0.875`; BGE served the four-query fixture at a median `3.8599 ms/query` versus `17.211 ms/query` for MiniLM (`4.46x` faster). Publication evidence: `benchmarks/publication/embeddings-baseline-v2.json`; raw execution: `benchmarks/results/embeddings-baseline.json`.
+
+**Claim:** Two revision-locked dense embedding models run locally through FastEmbed/ONNX behind one provider-neutral port and are compared with the same Recall@3 and end-to-end query timing policy.
 
 ## What It Proves
 
@@ -62,4 +62,5 @@ Cold indexing includes model initialization, passage embedding, and index assemb
 - Dense and sparse implementations satisfy one vectorizer port (DIP/OCP/LSP).
 - Metric, fixtures, CLI, and provider adapter have separate responsibilities (SRP/ISP).
 - Dependencies and Docker base are pinned; V2 evidence binds source, image, fixtures, config, lock, and raw artifact by digest.
+- `model-artifacts.lock.json` fixes the exact FastEmbed cache revisions and makes Docker build fail on upstream model drift.
 - No queue, database, HTTP API, cloud account, or orchestration layer is added because none improves this benchmark.

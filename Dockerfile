@@ -13,7 +13,9 @@ RUN pip install --no-cache-dir -r requirements.lock \
 
 COPY benchmarks/config ./benchmarks/config
 COPY tools/prefetch-models.py ./tools/prefetch-models.py
-RUN python tools/prefetch-models.py
+COPY tools/verify-model-cache.py ./tools/verify-model-cache.py
+RUN python tools/prefetch-models.py \
+    && python tools/verify-model-cache.py
 
 COPY pyproject.toml README.md ./
 COPY src ./src

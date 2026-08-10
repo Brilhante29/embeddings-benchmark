@@ -14,12 +14,17 @@ V1_PATH = ROOT / "benchmarks" / "results" / "embeddings-baseline.json"
 V2_PATH = ROOT / "benchmarks" / "publication" / "embeddings-baseline-v2.json"
 SCHEMA_PATH = ROOT / ".portfolio" / "contracts" / "benchmark-result-v2.schema.json"
 CONFIG_PATH = ROOT / "benchmarks" / "config" / "embeddings-baseline-v2.json"
+MODEL_LOCK_PATH = ROOT / "benchmarks" / "config" / "model-artifacts.lock.json"
 FIXTURE_PATH = ROOT / "data" / "fixtures"
 LOCK_PATH = ROOT / "requirements.lock"
 PRODUCER_PATH = ROOT / "tools" / "generate-publication-benchmark.py"
 EXPECTED_MODELS = {
     "BAAI/bge-small-en-v1.5",
     "sentence-transformers/all-MiniLM-L6-v2",
+}
+EXPECTED_REVISIONS = {
+    "BAAI/bge-small-en-v1.5": "52398278842ec682c6f32300af41344b1c0b0bb2",
+    "sentence-transformers/all-MiniLM-L6-v2": "5f1b8cd78bc4fb444dd171e59b18f3a3af89a079",
 }
 
 
@@ -80,7 +85,16 @@ def main() -> None:
         "Windows-only lock entry",
     )
     config = read_json(CONFIG_PATH)
+    model_lock = read_json(MODEL_LOCK_PATH)
     require(set(config["models"]) == EXPECTED_MODELS, "publication config model mismatch")
+    require(config["model_revisions"] == EXPECTED_REVISIONS, "config model revision mismatch")
+    require(config["model_artifact_lock"] == "benchmarks/config/model-artifacts.lock.json", "model lock path mismatch")
+    require(model_lock.get("fastembed_version") == "0.8.0", "model lock runtime mismatch")
+    require(
+        {row["model"]: row["revision"] for row in model_lock.get("models", [])}
+        == EXPECTED_REVISIONS,
+        "model artifact revisions mismatch",
+    )
     require(config["measured_queries"] == 4, "publication config query count mismatch")
     require(config["timing_repeat"] == 5, "publication config repeat mismatch")
     require(config["warmup_iterations"] == 1, "publication config warmup mismatch")

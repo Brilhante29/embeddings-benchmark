@@ -8,6 +8,11 @@
     "BAAI/bge-small-en-v1.5",
     "sentence-transformers/all-MiniLM-L6-v2"
   ],
+  "model_artifact_lock": "benchmarks/config/model-artifacts.lock.json",
+  "model_revisions": {
+    "BAAI/bge-small-en-v1.5": "52398278842ec682c6f32300af41344b1c0b0bb2",
+    "sentence-transformers/all-MiniLM-L6-v2": "5f1b8cd78bc4fb444dd171e59b18f3a3af89a079"
+  },
   "k": 3,
   "measured_queries": 4,
   "timing_repeat": 5,

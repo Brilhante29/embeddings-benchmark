@@ -8,7 +8,7 @@ program:
     - provider-neutral batched vectorizer protocol
     - portfolio-compatible result JSON
 status: published
-claim: CPU-local FastEmbed/ONNX comparison of BGE-small and MiniLM with correct Recall@3, cold indexing time, and end-to-end query latency.
+claim: CPU-local, revision-locked FastEmbed/ONNX comparison of BGE-small and MiniLM with Recall@3 and end-to-end query latency.
 stack:
   - python
   - fastembed-0.8.0
@@ -47,7 +47,7 @@ decision_brain:
     adapter_rule: Local and hosted embedding integrations stay behind the batched vectorizer protocol.
   database: fixture-files
   runtime: python-cli
-  library_policy: Use FastEmbed 0.8.0 for lightweight CPU ONNX inference; keep provider code behind the vectorizer port and retain sparse controls.
+  library_policy: Pin FastEmbed 0.8.0 and fail Docker builds on model-revision drift; keep provider code behind the vectorizer port.
   record_path: sdd/technical-decision.md
 architecture:
   style: ports-and-adapters
